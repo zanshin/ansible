@@ -7,14 +7,36 @@
   - name: update repository index
     apt:
       update_cache: yes
+    when: ansible_distribution == "Ubuntu"
 
   - name: install Apache2 package
     apt:
       name: apache2
       state: latest
+    when: ansible_distribution == "Ubuntu"
 
 
   - name: add PHP support for Apache
     apt:
       name: libapache2-mod-php
       state: latest
+    when: ansible_distribution == "Ubuntu"
+
+
+  - name: update repository index
+    yum:
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: install Apache2 package
+    yum:
+      name: httpd
+      state: latest
+    when: ansible_distribution == "CentOS"
+
+
+  - name: add PHP support for Apache
+    yum:
+      name: php
+      state: latest
+    when: ansible_distribution == "CentOS"
