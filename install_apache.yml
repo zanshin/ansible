@@ -4,10 +4,20 @@
   become: true
   tasks:
 
-  - name: install Apache and PHP packages
-    package:
+  - name: install Apache and PHP packages for Ubuntu servers
+    apt:
       name:
-        - "{{ apache_package }}"
-        - "{{ php_package }}"
+        - apache2
+        - libapache2-mod-php
       state: latest
       update_cache: yes
+    when ansible_distribution == "Ubuntu"
+
+  - name: install Apache and PHP packages for CentOS servers
+    yum:
+      name:
+        - httpd
+        - php
+      state: latest
+      update_cache: yes
+    when ansible_distribution == "CentOS"
